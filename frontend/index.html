@@ -1,28 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Campus Indoor Navigation</title>
-<link rel="stylesheet" href="styles.css" />
+  <title>Building Floor Navigation</title>
+  <!-- Stylish serif font for heading -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
-  <h1>Campus Indoor Navigation</h1>
 
-  <div id="controls">
-    <label for="floor-select">Select Floor:</label>
-    <select id="floor-select"></select>
+  <header>
+    <h1 id="page-title">Building Floor Navigation</h1>
+    <nav>
+      <ul>
+        <li>
+          <a href="/frontend/">Home</a>
+          <a href="/frontend/map/">Map</a>
+        </li>
+      </ul>
+    </nav>
+  </header>
 
-    <label for="room-select">Select Room:</label>
-    <select id="room-select"></select>
-
-    <button id="find-path">Find Path</button>
+  <!-- Building Animation -->
+  <div id="building">
+    <div class="floor"></div>
+    <div class="floor"></div>
+    <div class="floor"></div>
+    <div class="floor"></div>
+    <div class="floor"></div>
+    <div class="floor"></div>
+    <div class="floor"></div>
+    <div class="floor"></div>
+    <div class="floor"></div>
+    <div class="floor"></div>
+    <div class="floor"></div>
   </div>
 
-  <div id="map"></div>
-  <div id="info"></div>
-
-  <script src="script.js"></script>
-
 </body>
+
 </html>
