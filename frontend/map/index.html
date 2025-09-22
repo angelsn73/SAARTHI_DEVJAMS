@@ -1,63 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Building Floor Navigation</title>
-    <!-- Use a more stylish serif font for the heading -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/frontend/styles.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Building Floor Navigation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/frontend/styles.css" />
 </head>
-
 <body>
+  <header>
+    <h1 id="page-title">SAARTHI</h1>
+    <nav>
+      <a href="/frontend/">Home</a>
+      <a href="/frontend/map/">Map</a>
+    </nav>
+  </header>
 
-    <header>
-        <h1 id="page-title">Building Floor Navigation</h1>
-        <nav>
-            <ul>
-                <li>
-                    <a href="/frontend/">Home</a>
-                    <a href="/frontend/map/">Map</a>
-                </li>
-            </ul>
-        </nav>
-    </header>
+  <div id="controls">
+    <label for="floor-select">Select Floor:</label>
+    <select id="floor-select"></select>
 
-    <div id="controls">
-        <label for="floor-select">Select Floor:</label>
-        <select id="floor-select"></select>
+    <label for="room-select">Select Room:</label>
+    <select id="room-select"></select>
 
-        <label for="room-select">Select Room:</label>
-        <select id="room-select"></select>
+    <label for="room-input" style="margin-left:8px;">Or type room:</label>
+    <input id="room-input" placeholder="e.g. 05 or R105" style="width:110px; padding:6px; margin-left:4px;" />
+    <button id="room-go" style="margin-left:6px;">Go</button>
+    <button id="find-path" style="margin-left:8px;">Find Path</button>
 
-        <label for="room-input" style="margin-left:8px;">Or type room:</label>
-        <input id="room-input" placeholder="e.g. 05 or R105" style="width:110px; padding:6px; margin-left:4px;" />
-        <button id="room-go" style="margin-left:6px;">Go</button>
-
-        <button id="find-path" style="margin-left:8px;">Find Path</button>
-
-        <!-- Pop-down quick picker -->
-        <div id="popdown-wrapper" style="display:inline-block; position:relative; margin-left:12px;">
-            <button id="popdown-toggle">Quick Pick</button>
-            <div id="popdown-panel"
-                style="display:none; position:absolute; right:0; top:100%; background:#fff; border:1px solid #ddd; padding:8px; border-radius:6px; box-shadow:0 8px 20px rgba(0,0,0,0.08); width:220px; z-index:50;">
-                <div style="margin-bottom:6px;"><label
-                        style="display:block;font-size:0.9rem;color:#555">Floor</label><select id="pop-floor"></select>
-                </div>
-                <div style="margin-bottom:6px;"><label
-                        style="display:block;font-size:0.9rem;color:#555">Room</label><select id="pop-room"></select>
-                </div>
-                <div style="text-align:right;"><button id="pop-pick">Go</button></div>
-            </div>
+    <!-- Quick Pick -->
+    <div id="popdown-wrapper" style="display:inline-block; position:relative; margin-left:12px;">
+      <button id="popdown-toggle">Quick Pick</button>
+      <div id="popdown-panel"
+        style="display:none; position:absolute; right:0; top:100%; background:#fff; border:1px solid #ddd; padding:8px; border-radius:6px; box-shadow:0 8px 20px rgba(0,0,0,0.08); width:220px; z-index:50;">
+        <div style="margin-bottom:6px;">
+          <label style="display:block;font-size:0.9rem;color:#555">Floor</label>
+          <select id="pop-floor"></select>
         </div>
+        <div style="margin-bottom:6px;">
+          <label style="display:block;font-size:0.9rem;color:#555">Room</label>
+          <select id="pop-room"></select>
+        </div>
+        <div style="text-align:right;"><button id="pop-pick">Go</button></div>
+      </div>
     </div>
+  </div>
 
-    <div id="map"></div>
-    <div id="info"></div>
+  <div id="map"></div>
+  <div id="info"></div>
 
-    <script src="/frontend/script.js"></script>
-
+  <script src="/frontend/script.js"></script>
 </body>
-
 </html>

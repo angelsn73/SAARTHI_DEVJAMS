@@ -1,44 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Building Floor Navigation</title>
-  <!-- Stylish serif font for heading -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <title>SAARTHI - Your Indoor Navigation Assistant</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
 </head>
-
 <body>
+  <div class="hero">
+    <header>
+      <h1 id="page-title">SAARTHI</h1>
+      <nav>
+        <a href="/frontend/">Home</a>
+        <a href="/frontend/map/">Map</a>
+      </nav>
+    </header>
 
-  <header>
-    <h1 id="page-title">Building Floor Navigation</h1>
-    <nav>
-      <ul>
-        <li>
-          <a href="/frontend/">Home</a>
-          <a href="/frontend/map/">Map</a>
-        </li>
-      </ul>
-    </nav>
-  </header>
+    <main class="landing-content">
+      <div class="hero-text">
+        <h2>Navigate Your Way with Confidence</h2>
+        <p>Your intelligent indoor navigation assistant that helps you find the quickest path to any room from the nearest lift.</p>
+        <div class="cta-buttons">
+          <a href="/frontend/map/" class="btn btn-primary">Start Navigation</a>
+          <a href="#features" class="btn btn-secondary">Learn More</a>
+        </div>
+      </div>
 
-  <!-- Building Animation -->
-  <div id="building">
-    <div class="floor"></div>
-    <div class="floor"></div>
-    <div class="floor"></div>
-    <div class="floor"></div>
-    <div class="floor"></div>
-    <div class="floor"></div>
-    <div class="floor"></div>
-    <div class="floor"></div>
-    <div class="floor"></div>
-    <div class="floor"></div>
-    <div class="floor"></div>
+      <section id="features" class="features">
+        <h3>Key Features</h3>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <div class="feature-icon">🎯</div>
+            <h4>Smart Pathfinding</h4>
+            <p>Automatically finds the nearest lift and shortest path to your destination</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🗺️</div>
+            <h4>Interactive Map</h4>
+            <p>Clear visual representation of floors and rooms</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h4>Quick Access</h4>
+            <p>Fast room selection and instant path calculation</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">📱</div>
+            <h4>User Friendly</h4>
+            <p>Simple and intuitive interface for easy navigation</p>
+          </div>
+        </div>
+      </section>
+    </main>
   </div>
-
 </body>
-
 </html>

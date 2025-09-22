@@ -1,139 +1,169 @@
-from collections import deque
-from rich.console import Console
-from rich.table import Table
-from rich.panel import Panel
-from rich.box import HEAVY_EDGE
+/* General */
+body {
+  font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+  margin: 0;
+  background:url(/saarthi.jpg) no-repeat center center fixed;
+  color: #010b15;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-console = Console()
+header {
+  text-align: center;
+  padding: 20px;
+  background: #2c3e50;
+  color: white;
+  width: 100%;
+}
 
-# ------------------------------
-# Generate Floors (5 floors, 25 rooms each, with corridors)
-# ------------------------------
-FLOORS = {}
-ROWS, COLS = 7, 7   # enough space for 25 rooms + corridors
+nav a {
+  color: #f1f1f1;
+  margin: 0 10px;
+  text-decoration: none;
+}
 
-for f in range(1, 6):  # Floors 1–5
-    grid = [[" " for _ in range(COLS)] for _ in range(ROWS)]  # Use space for corridors
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.4rem;
+  text-shadow: 0 6px 18px rgba(0,0,0,0.18);
+}
 
-    # Add walls around
-    for r in range(ROWS):
-        for c in range(COLS):
-            if r in [0, ROWS-1] or c in [0, COLS-1]:
-                grid[r][c] = "X"
+/* ---------------- Building (Homepage) ---------------- */
+#building {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  animation: slideUp 1.2s ease-in-out;
+}
 
-    # Entrance at Ground Floor
-    if f == 1:
-        grid[ROWS-1][COLS//2] = "E"
-    else:
-        grid[ROWS-1][COLS//2] = "S"  # Stairs
+.roof {
+  width: 180px;
+  height: 40px;
+  background: #2c3e50;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  margin-bottom: 5px;
+}
 
-    # Place 25 rooms inside a 5x5 block
-    room_no = 1
-    for r in range(1, 6):
-        for c in range(1, 6):
-            grid[r][c] = f"R{f}{room_no:02d}"
-            room_no += 1
+.floor {
+  width: 180px;
+  height: 60px;
+  background: #34495e;
+  margin: 2px 0;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  border: 2px solid #2c3e50;
+  border-radius: 3px;
+  animation: fadeIn 0.6s ease-in-out;
+}
 
-    FLOORS[f] = grid
+.window {
+  width: 30px;
+  height: 40px;
+  background: #ecf0f1;
+  border: 2px solid #2c3e50;
+  border-radius: 2px;
+}
 
-# ------------------------------
-# Helper functions
-# ------------------------------
-def find_position(floor, value):
-    grid = FLOORS[floor]
-    for r in range(ROWS):
-        for c in range(COLS):
-            if grid[r][c] == value:
-                return (r, c)
-    return None
+.door {
+  width: 40px;
+  height: 50px;
+  background: #8e44ad;
+  border: 2px solid #2c3e50;
+  border-radius: 3px;
+}
 
-def bfs(floor, start, goal):
-    grid = FLOORS[floor]
-    queue = deque([start])
-    visited = {start: None}
+/* ---------------- Map Page ---------------- */
+#controls {
+  position: relative;
+  z-index: 2;
+  background: #6652a0;
+  padding: 1rem 0.75rem;
+  margin: 1rem auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
 
-    while queue:
-        r, c = queue.popleft()
-        if (r, c) == goal:
-            break
-        for dr, dc in [(1,0),(-1,0),(0,1),(0,-1)]:
-            nr, nc = r+dr, c+dc
-            if 0 <= nr < ROWS and 0 <= nc < COLS:
-                if grid[nr][nc] != "X" and (nr,nc) not in visited:
-                    queue.append((nr,nc))
-                    visited[(nr,nc)] = (r,c)
+select,
+button {
+  font-size: 1rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid #202631;
+  background: #fdfdfd;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
 
-    if goal not in visited:
-        return None
+button:hover,
+select:hover {
+  border-color: #11202a;
+  box-shadow: 0 0 5px rgba(6, 28, 43, 0.2);
+}
 
-    path = []
-    node = goal
-    while node:
-        path.append(node)
-        node = visited[node]
-    path.reverse()
-    return path
+#map {
+  margin-top: 0;
+  display: grid;
+  grid-template-columns: repeat(10, 42px);
+  grid-template-rows: repeat(10, 42px);
+  gap: 4px;
+  background: #eef2f7;
+  border: 1px solid #d6dbdf;
+  width: max-content;
+  padding: 8px;
+  border-radius: 12px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+}
 
-def display_map(floor, path=None, start=None, goal=None):
-    grid = FLOORS[floor]
-    table = Table(show_header=False, box=HEAVY_EDGE, expand=False)
-    for _ in range(COLS):
-        table.add_column(justify="center", style="bold")
+.cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: default;
+  user-select: none;
+  border: 1px solid transparent;
+  transition: all 0.3s;
+  background-color: #ffffff;
+}
 
-    for r in range(ROWS):
-        row = []
-        for c in range(COLS):
-            cell = grid[r][c]
-            if path and (r,c) in path and (r,c) != start and (r,c) != goal:
-                row.append("[blue]*[/blue]")
-            elif (r,c) == start:
-                row.append("[green]E(S)[/green]")
-            elif (r,c) == goal:
-                row.append(f"[red]{cell}(D)[/red]")
-            elif cell.startswith("R"):
-                row.append(f"[cyan]{cell}[/cyan]")
-            elif cell == " ":
-                row.append("[white] [/white]")  # True corridor space
-            elif cell == "S":
-                row.append("[green]S[/green]")   # stairs
-            elif cell == "E":
-                row.append("[green]E[/green]")   # entrance
-            else:
-                row.append("[grey37]X[/grey37]")  # walls
-        table.add_row(*row)
+.cell:hover {
+  border-color: #2dd3df;
+  transform: scale(1.05);
+}
 
-    console.print(table)
+/* Themed cells */
+.wall { background-color: #975353; color: #ecf0f1; }
+.corridor { background-color: #616363; border: 1px dashed #d5dbdb; }
+.room { background-color: #d47ae8; color: #fff; }
+.start { background-color: #58d68d; color: #fff; box-shadow: 0 0 6px rgba(88,214,141,0.6); }
+.goal { background-color: #ec7063; color: #fff; box-shadow: 0 0 6px rgba(236,112,99,0.6); }
+.path { background-color: #3ae85d; color: #413b3b; box-shadow: inset 0 0 5px rgba(51,2,2,0.25); }
+.lift { background-color: #f1c30c; color: #444; border: 1px solid #f1c40f; }
+.bathroom { background-color: #6caff3; color: #fff; }
+.commonspace { background-color: #bb7699; border: 1px solid #906b84; }
 
-# ------------------------------
-# Main program
-# ------------------------------
-def main():
-    console.print(Panel.fit("📋 [bold yellow]Multi-Floor Indoor Navigation[/bold yellow]"))
+#info {
+  margin-top: 1rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
 
-    # Ask for floor
-    floor = int(console.input("\n🏷️  Enter destination floor (1–5): ").strip())
-    if floor not in FLOORS:
-        console.print("[red]❌ Invalid floor number.[/red]")
-        return
+/* ---------------- Animations ---------------- */
+@keyframes slideUp {
+  from { transform: translateY(50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
 
-    # Ask for room
-    destination = console.input(f"🏷️  Enter destination room (e.g., R{floor}01 – R{floor}25): ").strip().upper()
-
-    start = find_position(1, "E") if floor == 1 else find_position(floor, "S")
-    goal = find_position(floor, destination)
-
-    if not goal:
-        console.print("[red]❌ Invalid room number.[/red]")
-        return
-
-    path = bfs(floor, start, goal)
-    if not path:
-        console.print("[red]⚠️ No path found![/red]")
-        return
-
-    console.print(f"\n[bold]Floor {floor} Layout[/bold]:")
-    display_map(floor, path, start, goal)
-    console.print(f"\n✅ Shortest path found! Steps: [bold green]{len(path)-1}[/bold green]")
-
-if __name__ == "__main__":
-    main()
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
